@@ -28,5 +28,5 @@ public class EventsController : ControllerBase
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new ResponseErrorJson("Unknown error"));
         }
-    }
+    }//
 }
