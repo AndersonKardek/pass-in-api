@@ -1,4 +1,5 @@
 ﻿using PassIn.Communication.Requests;
+using PassIn.Exceptions;
 
 namespace PassIn.Application.UseCases.Events.Register;
 
@@ -13,17 +14,17 @@ public class RegisterEventUseCase
     {
         if (request.MaximumAttendees <= 0) 
         {
-            throw new ArgumentException("The maximun attendees is invalid");    
+            throw new PassInException("The maximun attendees is invalid");    
         }
 
         if(string.IsNullOrWhiteSpace(request.Title)) 
         {
-            throw new ArgumentException("The title is invalid");
+            throw new PassInException("The title is invalid");
         }
 
         if (string.IsNullOrWhiteSpace(request.Details))
         {
-            throw new ArgumentException("The title is invalid");
+            throw new PassInException("The title is invalid");
         }
     }
 }

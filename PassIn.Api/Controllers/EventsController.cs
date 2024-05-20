@@ -2,6 +2,7 @@
 using PassIn.Application.UseCases.Events.Register;
 using PassIn.Communication.Requests;
 using PassIn.Communication.Responses;
+using PassIn.Exceptions;
 
 namespace PassIn.Api.Controllers;
 [Route("api/[controller]")]
@@ -20,7 +21,7 @@ public class EventsController : ControllerBase
 
             return Created();
         }
-        catch (ArgumentException ex)
+        catch (PassInException ex)
         {
             return BadRequest(new ResponseErrorJson(ex.Message));
         }
@@ -28,5 +29,5 @@ public class EventsController : ControllerBase
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new ResponseErrorJson("Unknown error"));
         }
-    }//
+    }
 }
