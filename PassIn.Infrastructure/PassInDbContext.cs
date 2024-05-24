@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using PassIn.Infrastructure.Entities;
 
 namespace PassIn.Infrastructure;
 
 public class PassInDbContext : DbContext
 {
+    public DbSet<Event> Events { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        //optionsBuilder.UseSqlite("Data Source=C:\\codes\\chsarp\\PassIn\\PassInDb.db");
-        optionsBuilder.UseSqlServer("Server=localhost\\1200;Database=cashFlow;Uid=sa;Pwd=SQLserver01@;Trusted_Connection=True;TrustServerCertificate=True;");
-
+        optionsBuilder.UseSqlServer("Server=localhost,1200;Database=check-in;User Id=sa;Password=SQLserver01@;TrustServerCertificate=True;");
     }
 }
-//oasdask
