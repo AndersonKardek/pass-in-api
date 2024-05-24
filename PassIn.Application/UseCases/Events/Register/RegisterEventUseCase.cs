@@ -7,7 +7,7 @@ namespace PassIn.Application.UseCases.Events.Register;
 
 public class RegisterEventUseCase
 {
-    public ResponseRegisteredEventJson Execute(RequestEventJson request)
+    public async Task<ResponseRegisteredEventJson> Execute(RequestEventJson request)
     {
         Validate(request);
 
@@ -21,8 +21,8 @@ public class RegisterEventUseCase
             Maximum_Attendees = request.MaximumAttendees,
         };
 
-        dbContext.Events.Add(entity);
-        dbContext.SaveChanges();
+        await dbContext.Events.AddAsync(entity);
+        await dbContext.SaveChangesAsync();
 
         return new ResponseRegisteredEventJson
         {

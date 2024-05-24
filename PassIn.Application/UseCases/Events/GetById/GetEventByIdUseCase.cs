@@ -5,11 +5,11 @@ using PassIn.Infrastructure;
 namespace PassIn.Application.UseCases.Events.GetById;
 public class GetEventByIdUseCase
 {
-    public ResponseEventJson Execute(Guid id)
+    public async Task<ResponseEventJson>Execute(Guid id)
     {
         var dbContext = new PassInDbContext();
 
-        var even = dbContext.Events.Find(id);
+        var even = await dbContext.Events.FindAsync(id);
 
         if (even is null)
         {
