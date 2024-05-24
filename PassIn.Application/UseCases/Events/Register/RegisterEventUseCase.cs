@@ -7,7 +7,7 @@ namespace PassIn.Application.UseCases.Events.Register;
 
 public class RegisterEventUseCase
 {
-    public async Task<ResponseRegisteredEventJson> Execute(RequestEventJson request)
+    public async Task<ResponseRegisteredJson> Execute(RequestEventJson request)
     {
         Validate(request);
 
@@ -24,7 +24,7 @@ public class RegisterEventUseCase
         await dbContext.Events.AddAsync(entity);
         await dbContext.SaveChangesAsync();
 
-        return new ResponseRegisteredEventJson
+        return new ResponseRegisteredJson
         {
             Id = entity.Id
         };
