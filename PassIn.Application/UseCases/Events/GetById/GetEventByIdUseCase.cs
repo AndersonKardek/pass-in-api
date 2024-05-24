@@ -13,7 +13,7 @@ public class GetEventByIdUseCase
 
         if (even is null)
         {
-            throw new PassInException("Event not found if this Id");
+            throw new NotFoundException("Event not found with this Id");
         }
 
         return new ResponseEventJson
