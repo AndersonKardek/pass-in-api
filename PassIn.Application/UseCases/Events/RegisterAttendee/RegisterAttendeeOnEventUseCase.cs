@@ -65,7 +65,7 @@ public class RegisterAttendeeOnEventUseCase
         var attendeesForEvent =_dbContext.Attendees.Count(attendee => attendee.Event_Id == eventId);
         
 
-        if(attendeesForEvent > eventEntity.Maximum_Attendees)
+        if(attendeesForEvent == eventEntity.Maximum_Attendees)
         {
             throw new ErrorOnValidationException("Maximum attendees alredy complete for this event");
         }
