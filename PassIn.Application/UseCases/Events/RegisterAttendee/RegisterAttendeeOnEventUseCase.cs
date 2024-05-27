@@ -23,6 +23,7 @@ public class RegisterAttendeeOnEventUseCase
             Email = request.Email,
             Event_Id = eventId,
             Created_At = DateTime.UtcNow,
+            
         };
 
         await _dbContext.Attendees.AddAsync(entity);

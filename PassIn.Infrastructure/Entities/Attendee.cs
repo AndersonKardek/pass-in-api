@@ -10,5 +10,5 @@ public class Attendee
     public DateTime Created_At { get; set; }
 
     public Guid Event_Id { get; set; }
-    public Event Event { get; set; }
+    public Event? Event { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using PassIn.Communication.Responses;
+﻿using Microsoft.EntityFrameworkCore;
+using PassIn.Communication.Responses;
 using PassIn.Exceptions;
 using PassIn.Infrastructure;
 
@@ -9,7 +10,9 @@ public class GetEventByIdUseCase
     {
         var dbContext = new PassInDbContext();
 
-        var even = await dbContext.Events.FindAsync(id);
+        var even = await dbContext.Events
+            .Include(ev => ev.Attendees)
+            .FirstOrDefaultAsync(ev => ev.Id.Equals(id));
 
         if (even is null)
         {
@@ -22,7 +25,7 @@ public class GetEventByIdUseCase
             Title = even.Title,
             Details = even.Details,
             MaximumAttendees = even.Maximum_Attendees,
-            AttendeesAmount = -1,
+            AttendeesAmount = even.Attendees.Count()
         };
     }
 }

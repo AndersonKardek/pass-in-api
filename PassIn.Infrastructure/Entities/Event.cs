@@ -12,5 +12,5 @@ public class Event
     public int Maximum_Attendees { get; set; }
 
     [ForeignKey("Event_Id")]
-    public ICollection<Attendee> attendees { get; set; }
+    public List<Attendee> Attendees { get; set; } = [];
 }
