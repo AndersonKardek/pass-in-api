@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PassIn.Infrastructure;
 
@@ -11,9 +12,11 @@ using PassIn.Infrastructure;
 namespace PassIn.Infrastructure.Migrations
 {
     [DbContext(typeof(PassInDbContext))]
-    partial class PassInDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240527182251_relationship")]
+    partial class relationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,6 +38,9 @@ namespace PassIn.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("Event_Id")
                         .HasColumnType("uniqueidentifier");
 
@@ -44,7 +50,7 @@ namespace PassIn.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Event_Id");
+                    b.HasIndex("EventId");
 
                     b.ToTable("Attendees");
                 });
@@ -79,7 +85,7 @@ namespace PassIn.Infrastructure.Migrations
                 {
                     b.HasOne("PassIn.Infrastructure.Entities.Event", "Event")
                         .WithMany("attendees")
-                        .HasForeignKey("Event_Id")
+                        .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
