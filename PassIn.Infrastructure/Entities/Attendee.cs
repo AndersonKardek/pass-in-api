@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PassIn.Infrastructure.Entities;
 public class Attendee
@@ -11,4 +12,7 @@ public class Attendee
 
     public Guid Event_Id { get; set; }
     public Event? Event { get; set; }
+
+    [ForeignKey("Attendee_Id")]
+    public CheckIn? CheckIn { get; set; }
 }
