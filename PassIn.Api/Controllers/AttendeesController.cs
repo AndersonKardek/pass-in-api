@@ -10,6 +10,14 @@ namespace PassIn.Api.Controllers;
 [ApiController]
 public class AttendeesController : ControllerBase
 {
+    private readonly GetAllAttendeeByEventIdUseCase _getAllAttendeeByEventIdUseCase;
+    private readonly RegisterAttendeeOnEventUseCase _registerAttendeeOnEventUseCase;
+
+    public AttendeesController(GetAllAttendeeByEventIdUseCase getAllAttendeeByEventIdUseCase, RegisterAttendeeOnEventUseCase registerAttendeeOnEventUseCase)
+    {
+        _getAllAttendeeByEventIdUseCase = getAllAttendeeByEventIdUseCase;
+        _registerAttendeeOnEventUseCase = registerAttendeeOnEventUseCase;
+    }
 
     [HttpPost]
     [Route("{eventId}/register")]
@@ -19,9 +27,7 @@ public class AttendeesController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Register([FromRoute] Guid eventId, [FromBody] RequestRegisterEventJson request)
     {
-        var useCase = new RegisterAttendeeOnEventUseCase();
-        var response = await useCase.Execute(eventId, request);
-
+        var response = await _registerAttendeeOnEventUseCase.Execute(eventId, request);
         return Created(string.Empty, response);
     }
 
@@ -31,9 +37,7 @@ public class AttendeesController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAll([FromRoute] Guid eventId)
     {
-        var useCase = new GetAllAttendeeByEventIdUseCase();
-        var response = await useCase.Execute(eventId);
-
+        var response = await _getAllAttendeeByEventIdUseCase.Execute(eventId);
         return Ok(response);
     }
 }

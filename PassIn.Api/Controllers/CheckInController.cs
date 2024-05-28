@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PassIn.Application.UseCases.Checkins.DoCheckIn;
 using PassIn.Communication.Responses;
 
@@ -8,6 +7,13 @@ namespace PassIn.Api.Controllers;
 [ApiController]
 public class CheckInController : ControllerBase
 {
+    private readonly DoAttendeeCheckInUseCase _doAttendeeCheckInUseCase;
+
+    public CheckInController(DoAttendeeCheckInUseCase doAttendeeCheckInUseCase)
+    {
+        _doAttendeeCheckInUseCase = doAttendeeCheckInUseCase;     
+    }
+
     [HttpPost]
     [Route("{attendeeId}")]
     [ProducesResponseType(typeof(ResponseRegisteredJson), StatusCodes.Status201Created)]
@@ -15,8 +21,7 @@ public class CheckInController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status409Conflict)]
     public async Task<IActionResult> CheckIn([FromRoute] Guid attendeeId)
     {
-        var useCase = new DoAttendeeCheckInUseCase();
-        var response = useCase.Execute(attendeeId);
+        var response = await _doAttendeeCheckInUseCase.Execute(attendeeId);
 
         return Created(string.Empty, response);
     }

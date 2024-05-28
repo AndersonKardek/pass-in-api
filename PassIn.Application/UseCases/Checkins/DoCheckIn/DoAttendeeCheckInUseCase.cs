@@ -8,9 +8,9 @@ namespace PassIn.Application.UseCases.Checkins.DoCheckIn;
 public class DoAttendeeCheckInUseCase
 {
     private readonly PassInDbContext _dbContext;
-    public DoAttendeeCheckInUseCase()
+    public DoAttendeeCheckInUseCase(PassInDbContext dbContext)
     {
-        _dbContext = new PassInDbContext();
+        _dbContext = dbContext;
     }
     public async Task<ResponseRegisteredJson> Execute(Guid attendeeId)
     {

@@ -9,9 +9,9 @@ namespace PassIn.Application.UseCases.Events.RegisterAttendee;
 public class RegisterAttendeeOnEventUseCase
 {
     private readonly PassInDbContext _dbContext;
-    public RegisterAttendeeOnEventUseCase()
+    public RegisterAttendeeOnEventUseCase(PassInDbContext dbContext)
     {
-        _dbContext = new PassInDbContext();
+        _dbContext = dbContext;
     }
     public async Task<ResponseRegisteredJson> Execute(Guid eventId, RequestRegisterEventJson request)
     {

@@ -7,9 +7,9 @@ namespace PassIn.Application.UseCases.Attendees.GetAllByEventId;
 public class GetAllAttendeeByEventIdUseCase
 {
     private readonly PassInDbContext _dbContext;
-    public GetAllAttendeeByEventIdUseCase()
+    public GetAllAttendeeByEventIdUseCase(PassInDbContext dbContext)
     {
-        _dbContext = new PassInDbContext();
+        _dbContext = dbContext;
     }
     public async Task<ResponseAllAttendeesjson> Execute(Guid eventId)
     {

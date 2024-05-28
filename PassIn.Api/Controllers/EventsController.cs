@@ -9,13 +9,21 @@ namespace PassIn.Api.Controllers;
 [ApiController]
 public class EventsController : ControllerBase
 {
+    private readonly RegisterEventUseCase _registerEventUseCase;
+    private readonly GetEventByIdUseCase _getEventByIdUseCase;
+
+    public EventsController(RegisterEventUseCase registerEventUseCase, GetEventByIdUseCase getEventByIdUseCase)
+    {
+        _registerEventUseCase = registerEventUseCase;
+        _getEventByIdUseCase = getEventByIdUseCase;
+    }
+
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisteredJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register([FromBody] RequestEventJson request)
     {
-        var useCase = new RegisterEventUseCase();
-        var response = await useCase.Execute(request);
+        var response = await _registerEventUseCase.Execute(request);
 
         return Created(string.Empty, response);
     }
@@ -26,8 +34,7 @@ public class EventsController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById([FromRoute] Guid id)
     {
-        var useCase = new GetEventByIdUseCase();
-        var response = await useCase.Execute(id);
+        var response = await _getEventByIdUseCase.Execute(id);
 
         return Ok(response);
     }
